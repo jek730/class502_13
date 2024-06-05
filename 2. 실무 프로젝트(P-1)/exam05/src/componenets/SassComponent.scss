@@ -1,0 +1,44 @@
+@import './utils.scss';
+
+.SassComponent {
+    display: flex;
+
+    .box {
+        width: 100px;
+        height: 100px;
+
+        &.red {
+            background: $red;
+        }
+
+        &.orange {
+            background: $orange;
+        }
+
+        &.yellow {
+            background: $yellow;
+        }
+
+        &.green {
+            background: $green;
+        }
+
+        &.blue {
+            background: $blue;
+        }
+
+        &.indigo {
+            background: $indigo;
+        }
+
+        &.violet {
+            background: $violet;
+        }
+
+        &:hover {
+            background: #000;
+        }
+    }
+
+    
+}
