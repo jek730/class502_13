@@ -10,6 +10,5 @@ public interface MemberMapper {
     int register(Member member);
 
     Member get(String email);
-    @Select("SELECT COUNT(*) FROM MEMBER WHERE email=#{email}")
     int exists(String email);
 }
