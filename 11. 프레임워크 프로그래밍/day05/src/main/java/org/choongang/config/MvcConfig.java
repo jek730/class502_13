@@ -1,14 +1,21 @@
 package org.choongang.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("org.choongang")
-@Import({DBConfig.class, MessageConfig.class})
+@Import({DBConfig.class,
+        MessageConfig.class,
+        InterceptorConfig.class,
+        FileConfig.class})
 //@RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
 
@@ -45,5 +52,25 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.jsp("/WEB-INF/templates/", ".jsp");
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigurer() {
+        String fileName = "application";
+        String profile = System.getenv("spring.profiles.active");
+        fileName += StringUtils.hasText(profile) ? "-" + profile:"";
+
+        /**
+         * spring.profiles.active=dev
+         * -> application-dev
+         *
+         * spring.profiles.active=prod
+         * -> application-prod
+         */
+
+        PropertySourcesPlaceholderConfigurer conf = new PropertySourcesPlaceholderConfigurer();
+        conf.setLocations(new ClassPathResource(fileName + ".properties"));
+
+        return conf;
     }
 }
