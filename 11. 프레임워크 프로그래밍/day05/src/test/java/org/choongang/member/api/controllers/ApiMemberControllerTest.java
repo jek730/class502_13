@@ -12,8 +12,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,16 +25,16 @@ public class ApiMemberControllerTest {
 
     private MockMvc mockMvc;
 
-    @Autowired
-    private org.choongang.member.api.controllers.ApiMemberController controller;
-
     //@Autowired
-    //private WebApplicationContext ctx;
+    //private ApiMemberController controller;
+
+    @Autowired
+    private WebApplicationContext ctx;
 
     @BeforeEach
     void init() {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        //mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+        //mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
     }
 
     @Test
@@ -45,8 +47,8 @@ public class ApiMemberControllerTest {
         RequestJoin form = new RequestJoin();
         form.setEmail("user100@test.org");
         form.setPassword("12345678");
-        form.setConfirmPassword("12345678");
-        form.setUserName("사용자100");
+        // form.setConfirmPassword("12345678");
+        //form.setUserName("사용자100");
         form.setAgree(true);
 
         String json = om.writeValueAsString(form);
