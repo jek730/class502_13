@@ -40,8 +40,8 @@ public class LoginValidator implements Validator {
         if (StringUtils.hasText(email)) {
             Member member = mapper.get(email);
             if (member == null) {
-                //errors.rejectValue("email", "Check.emailPassword");
-                errors.reject("Check.emailPassword");
+                //errors.rejectValue("email", "Check.emailPassword");  // 필드 한정, 필드 에러
+                errors.reject("Check.emailPassword");  // 필드 명시 X, 글로벌 에러
             }
 
 
