@@ -42,7 +42,7 @@ public class Utils {
 
     public List<String> getCodeMessages(String[] codes) {
         ResourceBundleMessageSource ms = (ResourceBundleMessageSource) messageSource;
-        ms.setUseCodeAsDefaultMessage(false);
+        ms.setUseCodeAsDefaultMessage(false);  // 메시지 코드 없으면 예외 발생
 
         List<String> messages = Arrays.stream(codes)
                 .map(c -> {
@@ -52,10 +52,10 @@ public class Utils {
                         return "";
                     }
                 })
-                .filter(s -> s != null && !s.isBlank())
+                .filter(s -> !s.isBlank())
                 .toList();
 
-        ms.setUseCodeAsDefaultMessage(true);
+        ms.setUseCodeAsDefaultMessage(true);  // 다시 ture로 바꿈(스프링 컨테이너 안의 객체는 싱글톤 객체)
         return messages;
     }
 }
