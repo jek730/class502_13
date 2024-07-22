@@ -15,10 +15,14 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class Utils {
+public class Utils { // 빈의 이름 - utils
 
     private final MessageSource messageSource;
     private final HttpServletRequest request;
+
+    public String toUpper(String str) {
+        return str.toUpperCase();
+    }
 
     public Map<String, List<String>> getErrorMessages(Errors errors) {
         // FieldErrors
@@ -42,7 +46,7 @@ public class Utils {
 
     public List<String> getCodeMessages(String[] codes) {
         ResourceBundleMessageSource ms = (ResourceBundleMessageSource) messageSource;
-        ms.setUseCodeAsDefaultMessage(false);  // 메시지 코드 없으면 예외 발생
+        ms.setUseCodeAsDefaultMessage(false);
 
         List<String> messages = Arrays.stream(codes)
                 .map(c -> {
@@ -55,7 +59,7 @@ public class Utils {
                 .filter(s -> !s.isBlank())
                 .toList();
 
-        ms.setUseCodeAsDefaultMessage(true);  // 다시 ture로 바꿈(스프링 컨테이너 안의 객체는 싱글톤 객체)
+        ms.setUseCodeAsDefaultMessage(true);
         return messages;
     }
 }
