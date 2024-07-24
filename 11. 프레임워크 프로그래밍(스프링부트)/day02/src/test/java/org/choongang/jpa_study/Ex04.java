@@ -1,4 +1,3 @@
-
 package org.choongang.jpa_study;
 
 import jakarta.persistence.EntityManager;
@@ -8,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @SpringBootTest
 @Transactional
@@ -30,14 +31,15 @@ public class Ex04 {
         em.clear();
 
         member = em.find(Member.class, member.getSeq());
-        System.out.println(member);
+        System.out.printf("createdAt: %s, modifiedAt: %s%n", member.getCreatedAt(), member.getModifiedAt());
 
         Thread.sleep(5000);
         member.setUserName("(수정)사용자01");
+        member.setCreatedAt(LocalDateTime.now());
         em.flush();
         em.clear();
 
         member = em.find(Member.class, member.getSeq());
-        System.out.println(member);
+        System.out.printf("createdAt: %s, modifiedAt: %s%n", member.getCreatedAt(), member.getModifiedAt());
     }
 }
